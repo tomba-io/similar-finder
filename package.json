@@ -1,6 +1,6 @@
 {
     "name": "similar-finder",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "module",
     "description": "Find similar domains based on a specific domain using the Tomba API.",
     "engines": {
