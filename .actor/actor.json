@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "similar-finder",
+    "title": "Tomba Similar Finder",
+    "description": "Find similar domains based on a specific domain using the Tomba API.",
+    "version": "0.0",
+    "buildTag": "latest",
+    "meta": {
+        "templateId": "ts-empty"
+    },
+    "dockerfile": "../Dockerfile",
+    "input": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    }
+}

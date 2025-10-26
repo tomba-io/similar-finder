@@ -1,0 +1,50 @@
+{
+    "title": "Tomba Similar Finder Input",
+    "description": "Input configuration for Tomba Similar Finder Actor - Find similar domains based on a specific domain",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "tombaApiKey": {
+            "title": "Tomba API Key",
+            "type": "string",
+            "description": "Your Tomba API key (starts with 'ta_'). Get it from https://app.tomba.io/api",
+            "example": "ta_xxxxxxxxxxxxxxxxxxxx",
+            "isSecret": true,
+            "editor": "textfield"
+        },
+        "tombaApiSecret": {
+            "title": "Tomba API Secret",
+            "type": "string",
+            "description": "Your Tomba secret key (starts with 'ts_'). Get it from https://app.tomba.io/api",
+            "example": "ts_xxxxxxxxxxxxxxxxxxxx",
+            "isSecret": true,
+            "editor": "textfield"
+        },
+        "domains": {
+            "title": "Domains",
+            "type": "array",
+            "description": "Array of domains to find similar websites for (e.g., 'example.com', 'google.com')",
+            "items": {
+                "type": "string",
+                "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "example": ["example.com", "google.com", "github.com"],
+            "editor": "stringList"
+        },
+        "maxResults": {
+            "title": "Maximum Results",
+            "type": "integer",
+            "description": "Maximum number of similar domains to return",
+            "minimum": 1,
+            "maximum": 10000,
+            "default": 50,
+            "example": 100,
+            "editor": "number"
+        }
+    },
+    "required": ["tombaApiKey", "tombaApiSecret", "domains"],
+    "additionalProperties": false
+}

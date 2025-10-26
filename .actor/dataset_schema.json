@@ -1,0 +1,112 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "type": "object",
+        "properties": {
+            "input_domain": {
+                "type": "string",
+                "description": "The original domain that was searched for similar websites"
+            },
+            "similar_domain": {
+                "type": ["string", "null"],
+                "description": "A similar domain found by the API (from website_url field)"
+            },
+            "company_name": {
+                "type": ["string", "null"],
+                "description": "Company name associated with the similar domain (from name field)"
+            },
+            "industries": {
+                "type": ["string", "null"],
+                "description": "Industries associated with the similar domain"
+            },
+            "website_url": {
+                "type": ["string", "null"],
+                "description": "Website URL of the similar domain"
+            },
+            "source": {
+                "type": "string",
+                "description": "Source of the data (tomba_similar_finder)"
+            },
+            "error": {
+                "type": ["string", "null"],
+                "description": "Error message if the search failed"
+            }
+        },
+        "required": ["input_domain", "source"]
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": ["input_domain", "similar_domain", "company_name", "industries", "website_url"]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "input_domain": {
+                        "label": "Input Domain"
+                    },
+                    "similar_domain": {
+                        "label": "Similar Domain"
+                    },
+                    "company_name": {
+                        "label": "Company"
+                    },
+                    "industries": {
+                        "label": "Industries"
+                    },
+                    "website_url": {
+                        "label": "Website URL"
+                    }
+                }
+            }
+        },
+        "detailed": {
+            "title": "Detailed View",
+            "transformation": {
+                "fields": [
+                    "input_domain",
+                    "similar_domain",
+                    "company_name",
+                    "industries",
+                    "website_url",
+                    "source",
+                    "error"
+                ]
+            },
+            "display": {
+                "component": "table"
+            }
+        },
+        "successful_matches": {
+            "title": "Successful Matches",
+            "transformation": {
+                "fields": ["input_domain", "similar_domain", "company_name", "industries"],
+                "filterBy": [
+                    {
+                        "field": "similar_domain",
+                        "operator": "notEquals",
+                        "value": null
+                    }
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "input_domain": {
+                        "label": "Input Domain"
+                    },
+                    "similar_domain": {
+                        "label": "Similar Domain"
+                    },
+                    "company_name": {
+                        "label": "Company Name"
+                    },
+                    "industries": {
+                        "label": "Industries"
+                    }
+                }
+            }
+        }
+    }
+}
