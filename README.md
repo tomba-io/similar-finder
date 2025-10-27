@@ -176,7 +176,7 @@ Filtered view showing only domains where similar matches were found, excluding e
 
 ## Keywords
 
-similar domains, competitive analysis, domain finder, business intelligence, market research, competitor discovery, website similarity, industry analysis, Tomba API, Apify actor, lead generation, company discovery, market mapping, business development
+similar domains, competitive analysis, domain finder, business intelligence, market research, competitor discovery, website similarity, industry analysis, lead generation, company discovery, market mapping, business development
 
 ## Support
 
