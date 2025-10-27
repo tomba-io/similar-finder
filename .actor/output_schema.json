@@ -1,0 +1,14 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Similar Finder Output",
+    "description": "Output from Tomba Similar Finder Actor - similar domains and company information",
+    "type": "object",
+    "properties": {
+        "results": {
+            "type": "string",
+            "title": "Similar Domain Results",
+            "description": "Similar domains with company information and industry data",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}
