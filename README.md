@@ -170,9 +170,44 @@ Filtered view showing only domains where similar matches were found, excluding e
 
 ### Cost Considerations
 
-- Each domain similarity search = 1 Tomba API request
+- Each domain analyzed = 1 Tomba API request
 - Monitor your Tomba usage dashboard
 - Consider Tomba's pricing tiers for volume usage
+
+## FAQ
+
+### General Questions
+
+**Q: What does similar domain finding do?**
+A: Similar domain finding analyzes a website and discovers other domains that are similar in content, industry, business model, or target audience. It helps identify competitors, partners, and related businesses.
+
+**Q: How are similar domains determined?**
+A: Similarity is calculated based on website content, industry classification, business model, technology usage, and audience overlap using advanced matching algorithms.
+
+**Q: How many similar domains can I expect to find?**
+A: Results typically include 10-50 similar domains per input domain, depending on the industry and how unique the business is. Popular industries tend to have more similar domains.
+
+### Technical Questions
+
+**Q: Can I find similar domains for any website?**
+A: You can analyze most business websites. Very niche or new websites might have fewer similar domains. Established companies in common industries typically yield better results.
+
+**Q: How should I interpret similarity scores?**
+A: Higher similarity scores indicate closer matches. Use scores to prioritize which similar domains are most relevant for your specific use case.
+
+**Q: What if no similar domains are found?**
+A: This might indicate a very unique business model, new industry, or highly specialized niche. Consider broadening your search or analyzing related industry domains.
+
+### Business Applications
+
+**Q: How can this help with competitive research?**
+A: Discover direct and indirect competitors you might not have known about, analyze their strategies, and identify market gaps or opportunities.
+
+**Q: Is this useful for finding partnership opportunities?**
+A: Yes! Similar domains often represent potential partners, especially those serving complementary markets or using compatible business models.
+
+**Q: Can I use this for market expansion?**
+A: Absolutely! Similar domains show you how others address similar markets, reveal new market segments, and inspire expansion strategies.
 
 ## Keywords
 
