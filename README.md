@@ -80,7 +80,7 @@ For each similar domain found, you'll receive:
 
 ### Best Practices
 
-- **Domain Format**: Use clean domain names without protocols (e.g., 'example.com' not 'https://example.com')
+- **Domain Format**: Use clean domain names without protocols (e.g., 'example.com' )
 - **Batch Size**: Process 10-20 domains at a time for optimal performance
 - **Rate Limits**: The Actor automatically handles Tomba's 150 requests/minute limit
 - **Quality Results**: Use established, well-known domains for better similarity matches
@@ -157,8 +157,8 @@ Filtered view showing only domains where similar matches were found, excluding e
 
 ### API Documentation
 
-- [Tomba API Docs](https://tomba.io/api) - Complete API reference
-- [Similar Finder Endpoint](https://docs.tomba.io/api/similar) - Specific similarity documentation
+- [Tomba API Docs](https://docs.tomba.io/introduction) - Complete API reference
+- [Similar Finder Endpoint](https://docs.tomba.io/api/domain#similar) - Specific similarity documentation
 - [Authentication Guide](https://app.tomba.io/api) - Get your API keys
 - [Pricing & Limits](https://tomba.io/pricing) - Understand rate limits and costs
 
