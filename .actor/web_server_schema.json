@@ -1,0 +1,215 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tomba Similar Finder API",
+        "version": "1.0.0",
+        "description": "Real-time API (Apify Standby mode). Find websites similar to a domain (competitors and look-alikes). Each domain with similar websites found costs $0.00312, however many it returns; domains with no results, errors and cached results are free."
+    },
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "Find similar websites for one or more domains",
+                "description": "Without query parameters, returns a short usage note (also used as the readiness probe).",
+                "parameters": [
+                    {
+                        "name": "domain",
+                        "in": "query",
+                        "description": "Domain to find similar websites for. Repeat the parameter or separate values with commas for several domains. URLs are cleaned up.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "stripe.com"
+                    },
+                    {
+                        "name": "domains",
+                        "in": "query",
+                        "description": "Alias of `domain`.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "maxResults",
+                        "in": "query",
+                        "description": "Maximum number of similar domains to return across all domains (default 50).",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 10000,
+                            "default": 50
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Results"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Find similar websites using a JSON input",
+                "description": "Accepts the same JSON input as a normal Actor run.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "domains": {
+                                        "type": "array",
+                                        "description": "Array of domains to find similar websites for (e.g., 'example.com', 'google.com')",
+                                        "items": {
+                                            "type": "string",
+                                            "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$"
+                                        },
+                                        "example": ["stripe.com", "shopify.com"]
+                                    },
+                                    "maxResults": {
+                                        "type": "integer",
+                                        "description": "Maximum number of similar domains to return",
+                                        "minimum": 1,
+                                        "maximum": 10000,
+                                        "default": 50
+                                    },
+                                    "maxConcurrency": {
+                                        "type": "integer",
+                                        "description": "How many Tomba requests run in parallel. There is no rate limit, so raise it for large lists.",
+                                        "minimum": 1,
+                                        "maximum": 50,
+                                        "default": 10
+                                    },
+                                    "maxRetries": {
+                                        "type": "integer",
+                                        "description": "How many times to retry a request after a network error, 429 or 5xx response (exponential backoff). Failed requests are never charged.",
+                                        "minimum": 0,
+                                        "maximum": 10,
+                                        "default": 3
+                                    },
+                                    "useCache": {
+                                        "type": "boolean",
+                                        "description": "Reuse results from previous runs for identical requests. Cached results are free.",
+                                        "default": true
+                                    },
+                                    "cacheTtlHours": {
+                                        "type": "integer",
+                                        "description": "How long cached results stay valid. 0 disables the cross-run cache.",
+                                        "minimum": 0,
+                                        "maximum": 720,
+                                        "default": 24
+                                    }
+                                },
+                                "required": ["domains"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Results"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/Error"
+                    },
+                    "402": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "Results": {
+                "description": "Similar website rows, in the same format as the dataset items.",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "items": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SimilarWebsite"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Error": {
+                "description": "Invalid input (400) or the run's max charge limit was reached (402).",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "SimilarWebsite": {
+                "type": "object",
+                "properties": {
+                    "input_domain": {
+                        "type": "string",
+                        "description": "The original domain that was searched for similar websites"
+                    },
+                    "similar_domain": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "A similar domain found by the API (from website_url field)"
+                    },
+                    "company_name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Company name associated with the similar domain (from name field)"
+                    },
+                    "industries": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Industries associated with the similar domain"
+                    },
+                    "website_url": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Website URL of the similar domain"
+                    },
+                    "source": {
+                        "type": "string",
+                        "description": "Source of the data (tomba_similar_finder)"
+                    },
+                    "error": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Error message if the search failed"
+                    },
+                    "charged": {
+                        "type": "boolean",
+                        "description": "Whether this request was charged (pay-per-event)"
+                    },
+                    "cached": {
+                        "type": "boolean",
+                        "description": "Whether the result came from the cache (free)"
+                    }
+                }
+            }
+        }
+    }
+}

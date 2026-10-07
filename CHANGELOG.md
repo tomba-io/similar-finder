@@ -16,6 +16,9 @@ All notable changes to this project will be documented in this file. See [standa
 - Cross-run result cache (`useCache`, `cacheTtlHours`)
 - Resume after migration or restart
 - Each dataset item now includes `charged` and `cached`
+- Standby mode: real-time HTTP API (`GET /?domain=…` or `POST /` with the run input) with an OpenAPI web server schema
+- Key-value store schema for `INPUT` and `TOMBA_STATE`
+- 256 MB default memory
 
 ### Dependencies
 
