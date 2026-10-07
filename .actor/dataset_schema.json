@@ -31,6 +31,14 @@
             "error": {
                 "type": ["string", "null"],
                 "description": "Error message if the search failed"
+            },
+            "charged": {
+                "type": "boolean",
+                "description": "Whether this request was charged (pay-per-event)"
+            },
+            "cached": {
+                "type": "boolean",
+                "description": "Whether the result came from the cache (free)"
             }
         },
         "required": ["input_domain", "source"]
@@ -72,7 +80,9 @@
                     "industries",
                     "website_url",
                     "source",
-                    "error"
+                    "error",
+                    "charged",
+                    "cached"
                 ]
             },
             "display": {

@@ -1,231 +1,157 @@
-# Tomba Similar Finder Actor
+# Tomba Similar Finder
 
-[![Actor](https://img.shields.io/badge/Apify-Actor-blue)](https://apify.com/actors)
-[![Tomba API](https://img.shields.io/badge/Tomba-API-green)](https://tomba.io)
-[![Rate Limit](https://img.shields.io/badge/Rate%20Limit-150%2Fmin-orange)](https://tomba.io/api)
+[![Price](https://img.shields.io/badge/Price-%243.12%20per%201K%20domains-brightgreen)](#pricing)
+[![No signup](https://img.shields.io/badge/Tomba%20account-not%20needed-blue)](#quick-start)
+[![No rate limit](https://img.shields.io/badge/Rate%20limit-none-brightgreen)](#built-for-big-lists)
 
-A powerful Apify Actor that discovers and retrieves similar domains based on a specific domain using the **Tomba Similar Finder API**. Perfect for competitive analysis, market research, and discovering related businesses in your industry or niche.
+**Turn one great customer or competitor into a list of look-alike companies.** Paste a list of domains and get the websites most similar to each one, with company name and industry, ready to export.
 
-## Key Features
+No Tomba account. No API key. No subscription. **You pay $0.00312 per domain, and only when we find something.**
 
-- **Similar Domain Discovery**: Find websites similar to your target domain
-- **Company Information**: Retrieve company names and descriptions for similar domains
-- **Industry Classification**: Understand the industry categories of similar websites
-- **Bulk Processing**: Process multiple domains efficiently with rate limiting
-- **Rate Limited**: Respects Tomba's 150 requests per minute limit
-- **Rich Data Output**: Comprehensive domain profiles with metadata
-- **Built-in Error Handling**: Robust processing with comprehensive error reporting
+## Why teams choose this Actor
 
-## How it works
+- **Start in 30 seconds**: Open the Actor, paste your domains, click Start. Nothing to sign up for
+- **Pay only for results**: Domains with no similar websites, errors and invalid inputs are free
+- **$3.12 per 1,000 domains**: One price per domain, however many look-alikes it returns. No monthly plan, no credits that expire
+- **Built for big lists**: No rate limit. Up to 1,000 domains per run, processed in parallel
+- **Never pay twice**: Domains you looked up in the last 24 hours come back from cache for free
+- **Clean input, clean output**: Paste URLs or domains in any format; duplicates are removed automatically
+- **Export anywhere**: Download as CSV, Excel or JSON, or send results straight to your CRM with Apify integrations
 
-The Actor leverages Tomba's powerful Similar Finder API to discover domains similar to your input:
+## What you can do with it
 
-### Process Flow
+| Goal                          | How similar websites help                                               |
+| ----------------------------- | ----------------------------------------------------------------------- |
+| **Clone your best customers** | Feed in your top accounts and get look-alike companies to prospect next |
+| **Map your competition**      | Discover direct and indirect competitors you didn't know about          |
+| **Find partners**             | Spot companies with similar audiences and business models               |
+| **Expand to new markets**     | See who else serves the same market as the companies you already know   |
+| **Research an industry**      | Build a list of players around a few well-known names                   |
 
-1. **Authentication**: Connects to Tomba API using your credentials
-2. **Input Processing**: Accepts array of domains to analyze
-3. **Similar Domain Discovery**: Uses Tomba's `websites` method for each domain
-4. **Data Enrichment**: Extracts company, industry, and similarity information
-5. **Rate Limiting**: Automatically handles 150 requests/minute limit
-6. **Data Storage**: Saves results to Apify dataset
+## Quick start
 
-### What You Get
+1. Click **Try for free**
+2. Paste your domains into **Domains** (for example `stripe.com`, `hubspot.com`)
+3. Click **Start**, then download your results as CSV, Excel or JSON
 
-For each similar domain found, you'll receive:
+That's it. No Tomba account or API key is needed.
 
-- **Similar Domain**: The discovered similar website domain
-- **Company Info**: Company name and description
-- **Industry**: Industry category classification
-- **Website URL**: Full website URL for easy access
-- **Source Tracking**: Data source identification
+## Input
 
-## Quick Start
+| Field            | Required | Default | Description                                                                                       |
+| ---------------- | -------- | ------- | ------------------------------------------------------------------------------------------------- |
+| `domains`        | Yes      |         | Domains to find look-alikes for (up to 1,000). URLs like `https://www.stripe.com/` are cleaned up |
+| `maxResults`     | No       | `50`    | Maximum number of similar-website rows for the whole run (up to 10,000)                           |
+| `maxConcurrency` | No       | `10`    | How many domains to process at the same time (1–50)                                               |
+| `maxRetries`     | No       | `3`     | How many times to retry a temporary failure (0–10)                                                |
+| `useCache`       | No       | `true`  | Reuse results from your previous runs for free                                                    |
+| `cacheTtlHours`  | No       | `24`    | How long cached results stay valid (`0` turns the cache off)                                      |
 
-### Prerequisites
-
-1. **Tomba Account**: Sign up at [Tomba.io](https://app.tomba.io/api) to get your API credentials
-
-### Getting Your API Keys
-
-1. Visit [Tomba API Dashboard](https://app.tomba.io/api)
-2. Copy your **API Key** (starts with `ta_`)
-3. Copy your **Secret Key** (starts with `ts_`)
-
-## Input Configuration
-
-### Required Parameters
-
-| Parameter        | Type       | Description                                   |
-| ---------------- | ---------- | --------------------------------------------- |
-| `tombaApiKey`    | `string`   | Your Tomba API key (ta_xxxx)                  |
-| `tombaApiSecret` | `string`   | Your Tomba secret key (ts_xxxx)               |
-| `domains`        | `string[]` | Array of domains to find similar websites for |
-
-### Optional Parameters
-
-| Parameter    | Type     | Default | Description                         |
-| ------------ | -------- | ------- | ----------------------------------- |
-| `maxResults` | `number` | `50`    | Maximum number of results to return |
-
-### Example Input
+`maxResults` counts rows across all your domains. When it is reached the run stops, so raise it when you submit many domains.
 
 ```json
 {
-    "tombaApiKey": "ta_xxxxxxxxxxxxxxxxxxxx",
-    "tombaApiSecret": "ts_xxxxxxxxxxxxxxxxxxxx",
-    "domains": ["example.com", "google.com", "github.com"],
-    "maxResults": 100
+    "domains": ["stripe.com", "hubspot.com", "notion.so"],
+    "maxResults": 1000
 }
 ```
 
-### Best Practices
+## Output
 
-- **Domain Format**: Use clean domain names without protocols (e.g., 'example.com' )
-- **Batch Size**: Process 10-20 domains at a time for optimal performance
-- **Rate Limits**: The Actor automatically handles Tomba's 150 requests/minute limit
-- **Quality Results**: Use established, well-known domains for better similarity matches
-- **Data Analysis**: Focus on similarity scores to identify the most relevant matches
-
-## Output Data Structure
-
-The Actor returns comprehensive information for each similar domain found:
+You get one row per similar website:
 
 ```json
 {
-    "input_domain": "example.com",
-    "similar_domain": "hunter.io",
-    "company_name": "Hunter",
-    "industries": "Information Technology and Services",
-    "website_url": "hunter.io",
-    "source": "tomba_similar_finder"
+    "input_domain": "stripe.com",
+    "similar_domain": "paypal.com",
+    "company_name": "PayPal",
+    "industries": "Financial Services",
+    "website_url": "paypal.com",
+    "source": "tomba_similar_finder",
+    "charged": true,
+    "cached": false
 }
 ```
 
-### Data Fields Explained
+| Field            | Description                                          |
+| ---------------- | ---------------------------------------------------- |
+| `input_domain`   | The domain you submitted                             |
+| `similar_domain` | The similar website found                            |
+| `company_name`   | Name of the company behind the similar website       |
+| `industries`     | Industry of the similar company                      |
+| `website_url`    | Website of the similar company                       |
+| `source`         | Always `tomba_similar_finder`                        |
+| `charged`        | `true` if this lookup was billed                     |
+| `cached`         | `true` if this result came from the cache (free)     |
+| `error`          | Why no similar websites were returned, if applicable |
 
-- **input_domain**: The original domain you searched for
-- **similar_domain**: The discovered similar domain (from website_url field)
-- **company_name**: Name of the company behind the similar domain
-- **industries**: Industries associated with the similar domain
-- **website_url**: Full URL of the similar website
-- **source**: Data source identifier (tomba_similar_finder)
-- **error**: Error message if the search failed
+The dataset has three ready-made views: **Overview**, **Detailed View** and **Successful Matches**.
 
-## Use Cases
+## Pricing
 
-### Competitive Analysis
+**$0.00312 per domain ($3.12 per 1,000).** No subscription and no Tomba account needed.
 
-- **Competitor Discovery**: Find direct and indirect competitors in your market
-- **Market Landscape**: Understand the competitive landscape of your industry
-- **Feature Comparison**: Discover similar services to analyze and compare
+You are only charged when Tomba returns a usable answer:
 
-### Business Development
+| What happens                                    | Charged |
+| ----------------------------------------------- | ------- |
+| Similar websites found for the domain           | Yes     |
+| No similar websites found for the domain        | No      |
+| Invalid domain or any other error               | No      |
+| Temporary failure (it is retried automatically) | No      |
+| Result served from the cache                    | No      |
 
-- **Partnership Opportunities**: Identify potential partners with similar business models
-- **Market Expansion**: Find similar companies in different geographic markets
-- **Acquisition Targets**: Discover companies with similar offerings for potential acquisition
+You pay once per domain, whether it returns 3 or 30 similar websites. Every row shows `charged` and `cached`, so you always know what you paid for. To cap your spend, set **Maximum cost per run** in the run options: the Actor stops cleanly when the limit is reached.
 
-### Market Research
+## Built for big lists
 
-- **Industry Analysis**: Understand market trends and player distribution
-- **Customer Research**: Find similar companies to understand target audiences
-- **Trend Identification**: Spot emerging players and market directions
+- **No rate limit**: up to 50 domains are processed at the same time
+- **Automatic retries**: temporary failures are retried for you, and never billed
+- **Resumable**: if a run is interrupted, it continues where it stopped without charging you again
+- **Cache**: repeat lookups within 24 hours are free
 
-### Sales & Marketing
+## Integrations
 
-- **Lead Generation**: Find similar companies as potential customers
-- **Account-Based Marketing**: Identify companies similar to your best customers
-- **Sales Prospecting**: Discover new prospects in similar market segments
+Run it on a schedule, call it from the Apify API, or connect it to Zapier, Make, Google Sheets, HubSpot, Slack and hundreds of other apps with [Apify integrations](https://docs.apify.com/platform/integrations). Webhooks let you trigger your own workflow as soon as a run finishes.
 
-## Data Views
-
-The Actor provides specialized data views:
-
-### Overview View
-
-Quick summary showing input domain, similar domain, company, and industry information
-
-### Detailed View
-
-Comprehensive view with all similarity data, company information, and technical details
-
-### Successful Matches View
-
-Filtered view showing only domains where similar matches were found, excluding errors
-
-## Resources & Documentation
-
-### API Documentation
-
-- [Tomba API Docs](https://docs.tomba.io/introduction) - Complete API reference
-- [Similar Finder Endpoint](https://docs.tomba.io/api/domain#similar) - Specific similarity documentation
-- [Authentication Guide](https://app.tomba.io/api) - Get your API keys
-- [Pricing & Limits](https://tomba.io/pricing) - Understand rate limits and costs
-
-### Rate Limiting
-
-- Tomba limits to **150 requests per minute**
-- Actor automatically handles rate limiting with delays
-- Large domain lists may take time to complete
-
-### Cost Considerations
-
-- Each domain analyzed = 1 Tomba API request
-- Monitor your Tomba usage dashboard
-- Consider Tomba's pricing tiers for volume usage
+Tip: feed the `similar_domain` column into **Tomba Domain Search** to get the verified emails of the people at each look-alike company.
 
 ## FAQ
 
-### General Questions
+**Do I need a Tomba account or API key?**
+No. Everything is built in. You only pay the per-domain price on Apify.
 
-**Q: What does similar domain finding do?**
-A: Similar domain finding analyzes a website and discovers other domains that are similar in content, industry, business model, or target audience. It helps identify competitors, partners, and related businesses.
+**How much does it cost?**
+$0.00312 per domain with results ($3.12 per 1,000). Domains with no results, errors and cached lookups are free.
 
-**Q: How are similar domains determined?**
-A: Similarity is calculated based on website content, industry classification, business model, technology usage, and audience overlap using advanced matching algorithms.
+**How many domains can I analyze in one run?**
+Up to 1,000 per run, processed in parallel. There is no rate limit.
 
-**Q: How many similar domains can I expect to find?**
-A: Results typically include 10-50 similar domains per input domain, depending on the industry and how unique the business is. Popular industries tend to have more similar domains.
+**Why did my run stop before all my domains were processed?**
+`maxResults` (default 50) limits the total number of rows in the run. Raise it when you submit many domains.
 
-### Technical Questions
+**What domain format should I use?**
+Anything works: `stripe.com`, `www.stripe.com` or `https://stripe.com/pricing`. We clean it up and remove duplicates.
 
-**Q: Can I find similar domains for any website?**
-A: You can analyze most business websites. Very niche or new websites might have fewer similar domains. Established companies in common industries typically yield better results.
+**Why are there no results for some domains?**
+Very new or very niche websites may have no known look-alikes yet. You are not charged for them. Established companies give the best results.
 
-**Q: How should I interpret similarity scores?**
-A: Higher similarity scores indicate closer matches. Use scores to prioritize which similar domains are most relevant for your specific use case.
+**What if my run is interrupted?**
+It picks up where it stopped. Domains already processed are not charged again.
 
-**Q: What if no similar domains are found?**
-A: This might indicate a very unique business model, new industry, or highly specialized niche. Consider broadening your search or analyzing related industry domains.
-
-### Business Applications
-
-**Q: How can this help with competitive research?**
-A: Discover direct and indirect competitors you might not have known about, analyze their strategies, and identify market gaps or opportunities.
-
-**Q: Is this useful for finding partnership opportunities?**
-A: Yes! Similar domains often represent potential partners, especially those serving complementary markets or using compatible business models.
-
-**Q: Can I use this for market expansion?**
-A: Absolutely! Similar domains show you how others address similar markets, reveal new market segments, and inspire expansion strategies.
-
-## Keywords
-
-similar domains, competitive analysis, domain finder, business intelligence, market research, competitor discovery, website similarity, industry analysis, lead generation, company discovery, market mapping, business development
+**How do I limit what I spend?**
+Set **Maximum cost per run** before you start. The Actor stops as soon as the limit is reached.
 
 ## Support
 
-If you need any help, have questions, or encounter any issues while using Tomba.io, please don't hesitate to reach out to our support team. You can contact us via:
+Questions or feedback? We're happy to help:
 
 - **Email**: support@tomba.io
-- **Live chat**: Available on the Tomba.io website during business hours
-
-## Contributing
-
-We welcome contributions to improve this actor. Please feel free to submit issues, feature requests, or pull requests to help make this tool even better for the community.
+- **Live chat**: on [tomba.io](https://tomba.io) during business hours
+- **Issues**: use the **Issues** tab on this Actor's page
 
 ## About Tomba
 
-Founded in 2020, Tomba prides itself on being the most reliable, accurate, and in-depth source of email address data available anywhere. We process terabytes of data to produce our Email finder API.
+Founded in 2020, [Tomba](https://tomba.io) is a B2B data platform for finding, verifying and enriching business contacts. Our Email Finder, Domain Search and Email Verifier help sales and marketing teams reach the right people.
 
 ![Tomba Logo](https://tomba.io/logo.png)
