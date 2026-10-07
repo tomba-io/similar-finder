@@ -151,7 +151,7 @@ Up to 1,000 per run, processed in parallel. There is no rate limit.
 `maxResults` (default 50) limits the total number of rows in the run. Raise it when you submit many domains.
 
 **What domain format should I use?**
-Anything works: `stripe.com`, `www.stripe.com` or `https://stripe.com/pricing`. We clean it up and remove duplicates.
+Anything works: `stripe.com`, `bbc.co.uk`, subdomains like `blog.stripe.com`, `www.stripe.com` or `https://stripe.com/pricing`. We clean it up and remove duplicates.
 
 **Why are there no results for some domains?**
 Very new or very niche websites may have no known look-alikes yet. You are not charged for them. Established companies give the best results.

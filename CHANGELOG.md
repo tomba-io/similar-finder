@@ -25,4 +25,8 @@ All notable changes to this project will be documented in this file. See [standa
 - `tomba` upgraded to 1.1.1 (responses are now `{ data, rateLimit }`)
 - `apify` upgraded to 3.7.2
 
+### Bug Fixes
+
+- Domains like `bbc.co.uk`, subdomains and URLs such as `https://bbc.co.uk/` are accepted; the input schema no longer rejects them (the Actor cleans them up)
+
 ### 0.0.2 (2025-10-26)

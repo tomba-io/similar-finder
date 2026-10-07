@@ -7,10 +7,9 @@
         "domains": {
             "title": "Domains",
             "type": "array",
-            "description": "Array of domains to find similar websites for (e.g., 'example.com', 'google.com')",
+            "description": "Domains to analyze, e.g. stripe.com, bbc.co.uk or blog.example.com. URLs such as https://www.stripe.com/pricing are cleaned up and duplicates removed.",
             "items": {
-                "type": "string",
-                "pattern": "^[a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.[a-zA-Z]{2,}$"
+                "type": "string"
             },
             "uniqueItems": true,
             "minItems": 1,
